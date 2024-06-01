@@ -1,64 +1,44 @@
 import random
+#se importan random para poder generar los numeros aleatorios 
 
-def picas_y_fijas():
-    clave = 0
-    intentos = 0 
-    numero = 0 
-    fijas = 0
+def generar_clave():
+    clave = random.sample(range(10), 4)
+    return clave
+
+def validar_intento(clave, intento):
     picas = 0
-    max_intentos = 12
-    min_cifra = 1
-    max_cifra = 9
+    fijas = 0
+    for i in range(4):
+        if intento[i] in clave:
+            if intento[i] == clave[i]:
+                fijas += 1
+            else:
+                picas += 1
+    return picas, fijas
 
-    mensaje = "Ingrese el número secreto (4 cifras sin repetir): "
-    numero = int(input(mensaje))
-
-    while True:
-        if len(set(str(numero))) != 4:
-            mensaje ="El número ingresado no tiene 4 cifras unicas, intenta de nuevo"
-            print (mensaje)
+def jugar():
+    clave = generar_clave()
+    intentos = 0
+    while intentos < 12:
+        intento = list(map(int, input("Introduce un número de 4 cifras: ").strip()))
+        if len(intento) != 4:
+            print("Debes introducir un número de 4 cifras.")
             continue
-        break
-
-    clave = random.randint(1000, 10000)
-    mensaje = "Intenta adivinar el número secreto"
-    print(mensaje)
-
-    while intentos < max_intentos:
-        mensaje = "Ingrese su intento:  "
-        intento = int(input(mensaje))
-        picas = 0
-        fijas = 0
-
-        for i in range(4):
-            cifra = clave % 10
-            posicion = i % 4
-
-            if cifra == intento % 10:
-                if posicion == 0:
-                    fijas += 1
-                elif posicion == 1:
-                    fijas += 1
-                elif posicion == 2:
-                    picas += 1
-                elif posicion == 3:
-                    fijas += 1
-
-            clave = clave // 10
-
-        mensaje = "Picas: " + str(picas) + " - Fijas: " + str(fijas) + "\n"
-        print(mensaje)
-
-        if picas == 4:
-            mensaje = "¡Felicidades! Adivinó el número secreto en " + str(intentos) + " intentos."
-            print(mensaje)
+        picas, fijas = validar_intento(clave, intento)
+        intentos += 1
+        print(f"Intentos: {intentos} - Picas: {picas} - Fijas: {fijas}")
+        if fijas == 4:
             break
-        elif intentos == max_intentos - 1:
-            mensaje = "Se acabaron los intentos. El número secreto era " + str(clave) + "."
-            print(mensaje)
+    else:
+        print("Mal, este juego no es para ti.")
+        return
+    if fijas == 4 and intentos < 2:
+        print("Excelente, eres un maestro estas fuera del alcance de los demás.")
+    elif fijas == 4 and intentos < 4:
+        print("Muy bueno, puedes ser un gran competidor.")
+    elif fijas == 4 and intentos < 8:
+        print("Bien, estas progresando debes buscar tus límites.")
+    elif fijas == 4 and intentos < 10:
+        print("Regular, Aún es largo el camino por recorrer.")
 
-    print('Presione "Enter" para jugar de nuevo, "Esc" para salir.')
-    input()
-
-if __name__ == "__main__":
-    picas_y_fijas()
+jugar()
