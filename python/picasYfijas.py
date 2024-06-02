@@ -1,10 +1,12 @@
 import random
-#se importan random para poder generar los numeros aleatorios 
+#se importa random para poder generar los numeros aleatorios 
 
+#se crea el numero clave usando random, en un rango del 1 al 10 y deben ser 4 digitos
 def generar_clave():
     clave = random.sample(range(10), 4)
     return clave
 
+#se itera los intentos del usuario
 def validar_intento(clave, intento):
     picas = 0
     fijas = 0
@@ -16,6 +18,8 @@ def validar_intento(clave, intento):
                 picas += 1
     return picas, fijas
 
+
+#se utiliza el while para comprobar que sean 12 intentos como limite ademas de comprobar que se agreguen 4 digitos en cada intento
 def jugar():
     clave = generar_clave()
     intentos = 0
