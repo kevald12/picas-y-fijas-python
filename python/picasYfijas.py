@@ -29,8 +29,11 @@ def jugar():
         print(f"Intentos: {intentos} - Picas: {picas} - Fijas: {fijas}")
         if fijas == 4:
             break
+
+
     else:
         print("Mal, este juego no es para ti.")
+        print(f"La clave era: {''.join(map(str, clave))}")
         return
     if fijas == 4 and intentos < 2:
         print("Excelente, eres un maestro estas fuera del alcance de los demás.")
